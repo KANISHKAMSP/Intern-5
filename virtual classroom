@@ -1,0 +1,166 @@
+
+import java.util.Scanner;
+
+public class Main {
+
+    static Scanner sc = new Scanner(System.in);
+
+    static String[] courses = {
+        "Java Programming",
+        "Digital Image Processing",
+        "Machine Learning",
+        "Database Management"
+    };
+
+    static String[] materials = {
+        "Java Notes.pdf",
+        "DIP Notes.pdf",
+        "ML Notes.pdf",
+        "DBMS Notes.pdf"
+    };
+
+    static String[] assignments = {
+        "Write a Java program",
+        "Explain image enhancement",
+        "Build a prediction model",
+        "Create SQL queries"
+    };
+
+    static boolean[] joined = new boolean[4];
+
+    public static void main(String[] args) {
+
+        int choice;
+
+        do {
+            System.out.println("\n===== VIRTUAL CLASSROOM APP =====");
+            System.out.println("1. View Courses");
+            System.out.println("2. Join a Class");
+            System.out.println("3. View Study Materials");
+            System.out.println("4. View Assignments");
+            System.out.println("5. View My Classes");
+            System.out.println("6. Exit");
+            System.out.print("Enter your choice: ");
+
+            choice = sc.nextInt();
+
+            switch (choice) {
+                case 1:
+                    viewCourses();
+                    break;
+
+                case 2:
+                    joinClass();
+                    break;
+
+                case 3:
+                    viewMaterials();
+                    break;
+
+                case 4:
+                    viewAssignments();
+                    break;
+
+                case 5:
+                    viewMyClasses();
+                    break;
+
+                case 6:
+                    System.out.println("Thank you for using Virtual Classroom!");
+                    break;
+
+                default:
+                    System.out.println("Invalid choice! Try again.");
+            }
+
+        } while (choice != 6);
+
+        sc.close();
+    }
+
+    static void viewCourses() {
+        System.out.println("\n----- AVAILABLE COURSES -----");
+
+        for (int i = 0; i < courses.length; i++) {
+            System.out.println((i + 1) + ". " + courses[i]);
+        }
+    }
+
+    static void joinClass() {
+        viewCourses();
+
+        System.out.print("Enter course number to join: ");
+        int number = sc.nextInt();
+
+        if (number < 1 || number > courses.length) {
+            System.out.println("Invalid course number!");
+            return;
+        }
+
+        int index = number - 1;
+
+        if (joined[index]) {
+            System.out.println("You have already joined this class.");
+        } else {
+            joined[index] = true;
+            System.out.println("Successfully joined " + courses[index]);
+        }
+    }
+
+    static void viewMaterials() {
+        viewCourses();
+
+        System.out.print("Enter course number: ");
+        int number = sc.nextInt();
+
+        if (number < 1 || number > courses.length) {
+            System.out.println("Invalid course number!");
+            return;
+        }
+
+        int index = number - 1;
+
+        if (joined[index]) {
+            System.out.println("Study Material: " + materials[index]);
+        } else {
+            System.out.println("Please join the class first.");
+        }
+    }
+
+    static void viewAssignments() {
+        viewCourses();
+
+        System.out.print("Enter course number: ");
+        int number = sc.nextInt();
+
+        if (number < 1 || number > courses.length) {
+            System.out.println("Invalid course number!");
+            return;
+        }
+
+        int index = number - 1;
+
+        if (joined[index]) {
+            System.out.println("Assignment: " + assignments[index]);
+        } else {
+            System.out.println("Please join the class first.");
+        }
+    }
+
+    static void viewMyClasses() {
+        System.out.println("\n----- MY CLASSES -----");
+
+        boolean found = false;
+
+        for (int i = 0; i < courses.length; i++) {
+            if (joined[i]) {
+                System.out.println(courses[i]);
+                found = true;
+            }
+        }
+
+        if (!found) {
+            System.out.println("You have not joined any classes yet.");
+        }
+    }
+}
